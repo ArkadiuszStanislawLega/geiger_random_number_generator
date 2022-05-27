@@ -61,7 +61,7 @@ class GeigerRandomNumberGenerator:
 
     def __append_bits_to_list(self):
         """
-        Clears the bits list when the number of bits equals the specific limit.
+        Adds a bit when the number of required ticks is reached.
         :return: None
         """
         if len(self.__pulses_times) == self.NUMBER_OF_TICKS:
