@@ -10,10 +10,10 @@ class GeigerRandomNumberGenerator:
     As a result of the radiation detection times taken and the permutations performed,
     a list of bits is generated. The sequence of bits can be used to generate numbers.
     """
-    NUMBER_OF_BITS = 8
     NUMBER_OF_TICKS = 3
 
-    def __init__(self):
+    def __init__(self, number_of_bits=8):
+        self.__number_of_bits = number_of_bits
         self.__random_bits = []
         self.__pulses_times = []
 
@@ -23,6 +23,10 @@ class GeigerRandomNumberGenerator:
         :return: Number of collected bits.
         """
         return len(self.__random_bits)
+
+    @property
+    def get_number_of_bits(self):
+        return self.__number_of_bits
 
     def set_pulse_time(self):
         """
@@ -56,7 +60,7 @@ class GeigerRandomNumberGenerator:
         Clears the bit list when the number of bits equals the reached limit.
         :return: None
         """
-        if len(self.__random_bits) == self.NUMBER_OF_BITS:
+        if len(self.__random_bits) == self.__number_of_bits:
             self.__random_bits.clear()
 
     def __append_bits_to_list(self):
@@ -87,14 +91,14 @@ class GeigerRandomNumberGenerator:
 
 
 if __name__ == '__main__':
-    geiger = GeigerRandomNumberGenerator()
-    number = 300
+    geiger = GeigerRandomNumberGenerator(128)
+    number = 1024
     counter = 0
 
     while counter < number:
         val = random.uniform(0, 0.00009)
         time.sleep(val)
         geiger.set_pulse_time()
-        if geiger.get_random_bits_number == geiger.NUMBER_OF_BITS:
+        if geiger.get_random_bits_number == geiger.get_number_of_bits:
             print((str(geiger.get_int_number())))
         counter += 1
